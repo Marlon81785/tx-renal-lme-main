@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="en" manifest="offlinedatabase.manifest">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../dist/build.css">
+    <title>Document</title>
+    <!--script src="../../dist/bundle.min.js" /-->
+    
+    <script src="../js/base64.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/doencaOssea.js"></script>
+    <script src="../js/functions.js"></script>
+    <script src="../js/grid_patients.js"></script>
+    <script src="../js/logica.js"></script>
+    <script src="../js/nomePaciente.js"></script>
+    <script src="../js/tx-renal.js"></script>
+    <script src="../js/pdfmake.min.js"></script>
+    <script src="../js/sqlite.js"></script>
+    <script src="../js/vfs_fonts.js"></script>
+    <script src="../js/schema.js"></script>
+    
+</head>
+
+
+<body onload="leitura()" class="bg-indigo-100">
+
+    <div id="master">
+
+        <div>
+            <div id="btns-c" class="flex flex-wrap place-content-center mx-auto lg-min-h-screen rounded-lg bg-white overflow-hidden p-1 m-2 mt-0">
+                <button onclick="start_grid_patients()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded">Histórico</button>
+                <button onclick="registrarPrescritor()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded">Add Prescritor</button>
+                <button onclick="registrarMedicamento()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded">Add Medicamento</button>
+                <button onclick="updateMedicamento()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded">Atualizar Medicamento</button>
+                <button onclick="updateEstabelecimento()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded">Atualizar Estabelecimento</button>
+                <button id="btntrocabtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 m-2 rounded" onclick="trocarSelectPorInput()"><b>preenchimento manual</b></button>
+            </div>
+            
+            
+            <div id="inf-paciente" class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-3xl p-8 mb-3">
+                
+        
+                <!--b id="ih"></b-->
+                <div id="inputPaciente">
+                    <div id="nomeee" class="relative inline-block w-full text-gray-700">
+                        <select onchange="findPaciente(this.value)" id="nomePaciente" class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline" placeholder="Nome do paciente">
+                            <option value="">Selecione o paciente</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                        </div>
+            
+                    </div> 
+                </div>
+                       
+        
+                <input id="nomeMae" type="text" placeholder="Nome da mãe" class="max-w-md h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline">
+                <input id="peso" type="text" placeholder="Peso" class="max-w-md h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline">
+                <input id="altura" type="text" placeholder="Altura" class="max-w-md h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline">
+                <input id="cpf" type="text" placeholder="CPF" class="max-w-md h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline">
+                <input id="telefone" type="text" placeholder="telefone" class="max-w-md h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline">
+            </div>
+        </div>
+        
+        
+        <div>
+            <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-3xl p-8 mb-3">
+                <h3 class="font-mono text-base md:text-lg">Medicamentos</h3>
+                <div id="medicamentos-lme" class="relative inline-block w-full text-gray-700">
+                    <select name="" id="medicamento" class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline">
+                        
+                    </select>
+                    
+                
+                    <button class="transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 absolute inset-y-0 right-0 flex items-center px-4 font-bold text-white bg-indigo-600 rounded-r-lg hover:bg-indigo-500 focus:bg-indigo-700" onclick="adicionarNaTabela()">Adicionar</button>
+            
+                </div>
+                
+            
+                <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-3xl p-8">
+                    <div>
+                        <table class="rounded font-mono text-base md:text-lg table-auto border-separate border-spacing-2 border border-slate-500">
+                            <th id="tableMed" class="font-mono text-base md:text-lg pr-8 text-red-500">Nenhum Medicamento Selecionado</th>
+                            <th class="font-mono text-base md:text-lg"></th>
+                            <tbody id="tabela-medicamento">
+                            
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </div>
+            
+                
+                </div>
+                <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-3xl p-8">
+            
+                        <label id="emUsoLabel" for="emUso">Realizou tratamento prévio ou esta em tratamento</label>
+                        <div class="relative inline-block w-full text-gray-700">
+                            <select onchange="javascript:pacienteEstaEmUso(this.value)" name="" id="emUso" class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline">
+                                <option value="s">SIM - Em uso de imunossupressão</option>
+                                <option value="n">NÃO</option>
+                                <option value="ns">deixar em branco</option>
+                            </select>
+                            <div id="emUsoSvg" class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                            </div>
+                        </div>
+                        
+                        <label for="medico">Responsável</label>
+                        <div class="relative inline-block w-full text-gray-700">
+                            
+                            <select onchange="javascript:configurarCNSdoMedico(this.value)" name="" id="medico" class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline">
+        
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                            </div>
+                        </div>    
+                        <div class="pt-10">
+                            <button id="btn_run" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="txRenal()">Gerar Receitas</button>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+    
+        </div>
+
+
+    </div>
+    
+
+
+
+
+
+    
+
+    
+</body>
+
+<script>
+    onInit();
+
+    var usuario = '--'
+
+    
+    
+
+</script>
+
+
+</html>
