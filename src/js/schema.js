@@ -120,6 +120,12 @@ function receitas(medico, paciente, posologia, medicamentosLME, medicamentosDosa
             fontSize: 12,
         },
         {
+            text: "Nefrologista",
+            alignment: "center",
+            absolutePosition: {y: 645},
+            fontSize: 12,
+        },
+        {
             text: address,
             absolutePosition: {x: 50, y: 750},
             fontSize: 10,
