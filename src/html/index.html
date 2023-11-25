@@ -7,16 +7,16 @@
     <title>Document</title>
     <!--script src="../../dist/bundle.min.js" /-->
     
+    <script src="../js/DBF.js"></script>
     <script src="../js/base64.js"></script>
     <script src="../js/data.js"></script>
-    <script src="../js/doencaOssea.js"></script>
     <script src="../js/functions.js"></script>
     <script src="../js/grid_patients.js"></script>
     <script src="../js/logica.js"></script>
     <script src="../js/nomePaciente.js"></script>
     <script src="../js/tx-renal.js"></script>
     <script src="../js/pdfmake.min.js"></script>
-    <script src="../js/sqlite.js"></script>
+    
     <script src="../js/vfs_fonts.js"></script>
     <script src="../js/schema.js"></script>
     
@@ -47,9 +47,10 @@
                         <select onchange="findPaciente(this.value)" id="nomePaciente" class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline" placeholder="Nome do paciente">
                             <option value="">Selecione o paciente</option>
                         </select>
-                        <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                        <div id="iconClass" class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
                             <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
                         </div>
+
             
                     </div> 
                 </div>
@@ -139,16 +140,6 @@
 
     
 </body>
-
-<script>
-    onInit();
-
-    var usuario = '--'
-
-    
-    
-
-</script>
 
 
 </html>

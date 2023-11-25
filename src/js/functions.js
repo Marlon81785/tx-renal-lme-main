@@ -13,6 +13,22 @@ function configurarCNSdoMedico(medicoSolicitante){
 }
 
 
+function configPatitentName(){
+    //pegando o nome pelo campo. porque o valor esta sendo usado para busca do paciente pelo cpf.
+    var nomePaciente;
+    var type = document.getElementById("nomePaciente").tagName;
+    if(type == 'SELECT'){
+        var indexName = document.getElementById("nomePaciente").selectedIndex;
+        nomePaciente = document.getElementById("nomePaciente").children[indexName].text;
+    }else{
+        nomePaciente = document.getElementById("nomePaciente").value;
+    }
+
+    return nomePaciente;
+    
+}
+
+
 /**
  * esta função controla a visibilidade do campo formulario especifico para anemia na tela
  * ocultando e desocultando conforme a necessidade do momento

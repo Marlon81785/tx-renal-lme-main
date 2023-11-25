@@ -572,7 +572,7 @@ function updateMd(nome, posologia, qtd, id){
     
 }
 
-//registrar estabelecimento de saude
+
 function migrate_medicamentos() {
     var query = "insert into medicamentos (nome, posologia, qtd) VALUES ('Incrilex', 'tomar 1x por dia', '30');";
     try {
