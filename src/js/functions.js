@@ -29,57 +29,6 @@ function configPatitentName(){
 }
 
 
-/**
- * esta função controla a visibilidade do campo formulario especifico para anemia na tela
- * ocultando e desocultando conforme a necessidade do momento
- */
-
-function exibirFormularioEspecifico(){
-    //se tiver um medicamento de anemia na lista, deve ser exibido o formulario correspondente
-    for(let i=0;i<=12;i=i+3){
-        try {
-            if(document.querySelectorAll("td")[i].textContent[0] == "A"){
-                document.getElementById("form-alfaepoetina").hidden = false;
-                document.getElementById("alfaepoetina").hidden = false;
-            }
-        } catch (error) {
-            
-        }
-        try {
-            if(document.querySelectorAll("td")[i].textContent[0] == "S"){
-                document.getElementById("form-sacarato").hidden = false;
-                document.getElementById("sacarato").hidden = false;
-            }
-        } catch (error) {
-            
-        }
-    }
-
-    try {
-        if(document.getElementById("form-alfaepoetina").hidden == false && document.getElementById("form-sacarato").hidden == false){
-            document.getElementById("alfaepoetina").hidden = true;
-            document.getElementById("sacarato").hidden = true;
-            document.getElementById("anemiaCombinado").hidden = false;
-        }else{
-            document.getElementById("anemiaCombinado").hidden = true;
-        }
-    } catch (error) {
-        
-    }
-    
-
-    
-    
-
-
-    
-}
-
-
-
-
-
-
 
 /**
  * Configurar de acordo com a situação do paciente
@@ -135,6 +84,7 @@ function registrarPrescritor(){
     if(crm == null || crm == ""){ return 0; }
     createPr(aux, nome, cns, crm);
     showPrescritoresOnScreen();
+    location.reload()
 }
 
 function registrarMedicamento(){
@@ -145,7 +95,7 @@ function registrarMedicamento(){
     var qtd = prompt("Insira o quantidade do medicamento por mês: ")
     if(qtd == null || qtd == ""){ return 0; }
     createMedicamento(nome, posologia, qtd);
-    //refreshMedicamentos();
+    location.reload()
 }
 
 
@@ -175,16 +125,6 @@ function updateEstabelecimento(){
     update_address = update_address.toString()
     updateEs(update_nome, update_nome_centro, update_cnes, update_address);
     findEs()//reexec for update global vars with database
-}
-
-function updateMedicamento(){
-    var id = prompt("Selecione um medicamento para atualizar \n\n"+lista)
-    if(id == null || id == ""){ return 0; }
-    
-    getMedicamento(id)
-
-    
-    
 }
 
 

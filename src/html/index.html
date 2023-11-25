@@ -2,7 +2,7 @@
 <html lang="en" manifest="offlinedatabase.manifest">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../dist/build.css">
     <title>Document</title>
     <!--script src="../../dist/bundle.min.js" /-->
@@ -16,16 +16,40 @@
     <script src="../js/nomePaciente.js"></script>
     <script src="../js/tx-renal.js"></script>
     <script src="../js/pdfmake.min.js"></script>
-    
     <script src="../js/vfs_fonts.js"></script>
     <script src="../js/schema.js"></script>
+    <script src="../js/modal.js"></script>
     
 </head>
 
 
 <body onload="leitura()" class="bg-indigo-100">
+        
+    <!-- Camada de fundo semitransparente -->
+    <div id="backgroundOverlay" class="absolute inset-0 bg-black opacity-50 z-40 hidden"></div>
+    
+    <div id="myModal" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 hidden">
+        <div class="modal-content bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold mb-4">Selecione e Atualize Medicamento</h2>
+            <select onchange="atualizarInputs()" id="medicamentosSelect" class="border p-2 mb-4">
+            </select>
+            <br>
+            <label for="newName" class="block text-sm font-medium text-gray-700">Novo nome:</label>
+            <input type="text" id="newName" class="border p-2 mb-4 w-full">
+            <br>
+            <label for="newQtd" class="block text-sm font-medium text-gray-700">Nova Quantidade:</label>
+            <input type="text" id="newQtd" class="border p-2 mb-4 w-full">
+            <br>
+            <label for="newPosologia" class="block text-sm font-medium text-gray-700">Nova Posologia:</label>
+            <input type="text" id="newPosologia" class="border p-2 mb-4 w-full">
+            <br>
+            <button onclick="atualizarMedicamento()" class="bg-blue-500 text-white py-2 px-4 rounded">Atualizar</button>
+            <button onclick="fecharModal()" class="bg-gray-400 text-white py-2 px-4 rounded">Fechar</button>
+        </div>
+    </div>
 
     <div id="master">
+        
 
         <div>
             <div id="btns-c" class="flex flex-wrap place-content-center mx-auto lg-min-h-screen rounded-lg bg-white overflow-hidden p-1 m-2 mt-0">

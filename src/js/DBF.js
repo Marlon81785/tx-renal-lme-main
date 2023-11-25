@@ -166,6 +166,53 @@ function saveHistory(nomePaciente, cpf, medicamentosParaSalvarNoBanco, medicoSol
 
 }
 
+// Função para atualizar um medicamento
+function updateMedicamentoDB(id, newName, newQtd, newPosologia) {
+    const dbName = 'pacientesDB';
+    const request = indexedDB.open(dbName);
+  
+    request.onsuccess = function(event) {
+      const db = event.target.result;
+  
+      // Iniciar uma transação de escrita no Object Store 'medicamentos'
+      const transaction = db.transaction(['medicamentos'], 'readwrite');
+      const medicamentosStore = transaction.objectStore('medicamentos');
+  
+      // Obter o medicamento pelo ID
+      const getRequest = medicamentosStore.get(Number(id));
+  
+      getRequest.onsuccess = function(event) {
+        const medicamento = event.target.result;
+  
+        // Atualizar o nome
+        medicamento.nome = newName;
+        // Atualizar a Quantidade
+        medicamento.qtd = newQtd;
+        // Atualizar a posologia
+        medicamento.posologia = newPosologia;
+  
+        // Armazenar o medicamento atualizado de volta no Object Store
+        const updateRequest = medicamentosStore.put(medicamento);
+  
+        updateRequest.onsuccess = function() {
+          console.log('Medicamento atualizado com sucesso!');
+        };
+  
+        updateRequest.onerror = function() {
+          console.error('Erro ao atualizar o medicamento.');
+        };
+      };
+  
+      transaction.oncomplete = function() {
+        db.close();
+      };
+    };
+  
+    request.onerror = function(event) {
+      console.error('Erro ao abrir o banco de dados: ', event.target.error);
+    };
+  }
+
 
 // Função para salvar paciente no IndexedDB  <----------------- 
 function salvarPaciente(paciente) {
@@ -411,7 +458,7 @@ consultarPacientes(function(resultados) {
 
 
 function findPaciente(){// lê no banco o restante das informações deste paciente e adiciona nos inputs
-
+    
     consultarPacientes(function(resultados) {
         console.log("Pacientes consultados:", resultados);
         // Faça algo com os resultados, por exemplo, exiba-os na interface do usuário
@@ -425,6 +472,8 @@ function findPaciente(){// lê no banco o restante das informações deste pacie
             }
         });
     });
+    
+    
 
 }
 
