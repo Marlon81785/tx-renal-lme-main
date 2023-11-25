@@ -72,7 +72,9 @@ function findPrByName(nome){// lê no banco o restante das informações deste p
                     //updateStatus("Erro: desconhecido.");
                 }else{
                     prefixo = results.rows[0]['prefixo']
+                    crm = results.rows[0]['crm']
                     medicoSolicitanteCNS = results.rows[0]['cns']
+                    medicoSolicitante = nome;
                     //console.log(results.rows[0])
                     
                     

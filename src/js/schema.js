@@ -1,6 +1,6 @@
 var pdf = new Array()
 
-function receitas(medico, paciente, posologia, medicamentosLME, medicamentosDosagens){
+function receitas(medicoSolicitante, crm, prefixo, paciente, posologia, medicamentosLME, medicamentosDosagens){
     var localVar = new Array()
     const tracinhoDefault = '  -----------------------'+" (";
     var fechamentoParentese1 = '';
@@ -114,13 +114,13 @@ function receitas(medico, paciente, posologia, medicamentosLME, medicamentosDosa
             fontSize: 12,
         },
         {
-            text: medico,
+            text: prefixo+""+medicoSolicitante,
             alignment: "center",
             absolutePosition: {y: 630},
             fontSize: 12,
         },
         {
-            text: "Nefrologista",
+            text: "Nefrologista"+" CRM("+crm+")",
             alignment: "center",
             absolutePosition: {y: 645},
             fontSize: 12,
@@ -140,7 +140,7 @@ function receitas(medico, paciente, posologia, medicamentosLME, medicamentosDosa
 
 
 function returnPageLME(
-    medico, paciente, mae_paciente, peso, altura,
+    medicoSolicitante, paciente, mae_paciente, peso, altura,
     cid, diagnosticoCid, anaminese, medicamentosLME, medicamentosDosagens
     ){
     return [
@@ -347,7 +347,7 @@ function returnPageLME(
         
     },
     {
-        text: medico.toUpperCase(),
+        text: medicoSolicitante.toUpperCase(),
         absolutePosition: {x: 60, y: 592}
     },
     {

@@ -110,7 +110,7 @@
                         <label for="medico">Responsável</label>
                         <div class="relative inline-block w-full text-gray-700">
                             
-                            <select onchange="javascript:configurarCNSdoMedico(this.value)" name="" id="medico" class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline">
+                            <select onchange="javascript:configurarCNSdoMedico(this.options[this.selectedIndex].label)" name="" id="medico" class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline">
         
                             </select>
                             <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">

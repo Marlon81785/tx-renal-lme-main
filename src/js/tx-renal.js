@@ -53,8 +53,6 @@ function txRenal() {
     var diagnosticoCid = "Rim transplantado";
     var cid = "Z940" // -> rim transplantado
     var anaminese = "Transplante renal."
-    
-    var medicoSolicitante = (document.getElementById("medico").textContent).trim()
 
     //var ano = now.getFullYear();
 
@@ -86,7 +84,7 @@ function txRenal() {
             pesoPaciente, alturaPaciente, cid, diagnosticoCid, 
             anaminese, medicamentosLME, medicamentosDosagens
         ),
-        receitas(medicoSolicitante, nomePaciente, posologiaMedicamentos, medicamentosLME, medicamentosDosagens)
+        receitas(medicoSolicitante, crm, prefixo, nomePaciente, posologiaMedicamentos, medicamentosLME, medicamentosDosagens)
 
     )
 

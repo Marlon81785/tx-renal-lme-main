@@ -4,7 +4,10 @@
 //configurar o prefixo e o CNS do medico
 var medicoSolicitanteCNS = null;
 var prefixo = "Dr. "
+var crm;
+var medicoSolicitante;
 function configurarCNSdoMedico(medicoSolicitante){
+    medicoSolicitante = medicoSolicitante;
     //essa funcao vai atualizar as variaveis acima prefixo e medicoSolicitanteCNS
     findPrByName(medicoSolicitante)
 }
