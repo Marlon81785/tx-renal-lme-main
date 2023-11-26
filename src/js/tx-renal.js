@@ -1,6 +1,9 @@
 function txRenal() {
 
     var cpf = document.getElementById("cpf").value;
+    if(cpf == ''){
+        return alert("Digite o cpf")
+    }
     var telefone = document.getElementById("telefone").value;
     var nomePaciente = configPatitentName();
     var nomeMaePaciente = document.getElementById("nomeMae").value;

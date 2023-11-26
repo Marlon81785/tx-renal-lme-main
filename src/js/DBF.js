@@ -15,7 +15,7 @@ request.onupgradeneeded = function(event) {
     if (!db.objectStoreNames.contains("pacientes")) {
         // Cria um object store para armazenar os pacientes
         const objectStore = db.createObjectStore("pacientes",
-        { keyPath: "id", autoIncrement: true });
+        { keyPath: "cpf", autoIncrement: true });
 
         // Definir índices, se necessário
         objectStore.createIndex("nome", "nome", { unique: false });
@@ -211,7 +211,63 @@ function updateMedicamentoDB(id, newName, newQtd, newPosologia) {
     request.onerror = function(event) {
       console.error('Erro ao abrir o banco de dados: ', event.target.error);
     };
-  }
+}
+
+
+// Função para atualizar pacientes por CPF
+function atualizarPorCPF(cpf, novosDados) {
+    const dbName = 'pacientesDB';
+    const request = indexedDB.open(dbName);
+  
+    request.onsuccess = function(event) {
+      const db = event.target.result;
+
+        // Abre uma transação no object store com permissão de leitura e gravação
+        const transaction = db.transaction('pacientes', 'readwrite');
+    
+        // Obtém uma referência ao object store
+        const objectStore = transaction.objectStore('pacientes');
+    
+        // Obtém o objeto com base na chave (CPF)
+        const getRequest = objectStore.get(cpf);
+    
+        getRequest.onsuccess = function () {
+        // Atualiza os dados do objeto com os novos dados
+        const objetoParaAtualizar = getRequest.result;
+        console.log('Objeto encontrado:', objetoParaAtualizar);
+        if (objetoParaAtualizar) {
+            // Atualiza os campos necessários
+            objetoParaAtualizar.nome = novosDados.nome;
+            //objetoParaAtualizar.cpf = novosDados.cpf;
+            objetoParaAtualizar.mae = novosDados.mae;
+            objetoParaAtualizar.peso = novosDados.peso;
+            objetoParaAtualizar.altura = novosDados.altura;
+            objetoParaAtualizar.telefone = novosDados.telefone;
+    
+            // Salva as alterações no object store
+            const updateRequest = objectStore.put(objetoParaAtualizar);
+    
+            updateRequest.onsuccess = function () {
+                console.log('Paciente atualizado com sucesso!');
+                db.close();
+            };
+    
+            updateRequest.onerror = function () {
+                console.error('Erro ao atualizar o Paciente:', updateRequest.error);
+                db.close();
+            };
+        } else {
+            console.error('Paciente não encontrado com o CPF fornecido.');
+            db.close();
+        }
+        };
+    
+        getRequest.onerror = function () {
+            console.error('Erro ao obter o objeto Paciente:', getRequest.error);
+            db.close();
+        };
+    }
+}//atualizarPorCPF(cpfParaAtualizar, novosDados);
 
 
 // Função para salvar paciente no IndexedDB  <----------------- 
@@ -226,6 +282,10 @@ function salvarPaciente(paciente) {
             telefone: "987654321"
         };
     */
+
+    atualizarPorCPF(paciente.cpf, paciente)
+    
+
     const request = indexedDB.open(dbName, dbVersion);
 
     request.onerror = function(event) {
